@@ -1,6 +1,9 @@
 class Hangman
   def initialize
-    @word = "bitmaker"
+    puts "Enter a new word."
+    @word = gets.chomp
+    @past_guesses = []
+    @hang_val = 0
   end
 
   def hide_word
@@ -21,7 +24,11 @@ class Hangman
       end
       index += 1
     end
+    @past_guesses << @guess
+    puts "\e[H\e[2J"
     puts @user_word
+    puts "Previous guesses:"
+    print_previous_guesses
   end
 
   def play
@@ -29,8 +36,45 @@ class Hangman
     while @user_word != @word
       ask_for_guess
       check_for_matches
+      if match_found?
+        puts "It's a match"
+      else
+        @hang_val += 1
+        hang_him
+      end
     end
   end
+
+  def print_previous_guesses
+    @past_guesses.each{|x| print x} 
+    puts ""
+  end
+
+  def hang_him
+    puts "No match! Let's hang 'em!"
+    puts "He has a:"
+    body_array = ["Head O", "Torso |", "Left arm /", "Right arm \\", "Left leg /", "Right leg \\", "You hung him! You really did it! Who hangs people? That's awful. Cut him down. The word is #{@word}"]
+    counter = 0
+    until counter == @hang_val
+      puts body_array[counter]
+      counter += 1
+    end 
+  end
+
+  def match_found?
+    return_val = false
+    index = 0
+    @word.each_char do |letter|
+      if letter == @guess
+        @user_word[index] = letter
+        return_val = true
+      end
+      index += 1
+    end
+    return_val
+  end
+
+
 end
 
 game = Hangman.new
