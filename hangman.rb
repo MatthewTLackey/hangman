@@ -53,7 +53,7 @@ class Hangman
   def hang_him
     puts "No match! Let's hang 'em!"
     puts "He has a:"
-    body_array = ["Head O", "Torso |", "Left arm /", "Right arm \\", "Left leg /", "Right leg \\", "You hung him! You really did it! Who hangs people? That's awful. Cut him down. The word is #{@word}"]
+    body_array = ["Head O", "Torso |", "Left arm /", "Right arm \\", "Left leg /", "Right leg \\", "You hung him! You really did it! Who hangs people? That's awful.\nCut him down. The word is '#{@word}'."]
     counter = 0
     until counter == @hang_val
       puts body_array[counter]
